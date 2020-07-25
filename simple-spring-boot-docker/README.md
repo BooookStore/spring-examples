@@ -7,7 +7,7 @@
 ./gradlew simple-spring-boot-docker:build
 ```
 
-3. Dockerコンテナをビルドします
+3. DockerfileをビルドしてDockerイメージを作成します
 
 ```
 cd simple-spring-boot-docker
