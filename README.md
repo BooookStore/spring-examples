@@ -1,6 +1,6 @@
 # spring-examples
 
-Springのサンプルを集めたリポジトリです。
+Springのサンプル集です。
 
 # samples
 
