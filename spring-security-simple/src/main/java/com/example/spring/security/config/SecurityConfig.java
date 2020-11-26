@@ -39,8 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/home", true);
 
         http.authorizeRequests()
-                .mvcMatchers("/home").authenticated()
-                .mvcMatchers("/manage").hasRole("ADMIN")
+                .mvcMatchers("/home/**").authenticated()
+                .mvcMatchers("/manage/**").hasRole("ADMIN")
                 .anyRequest().permitAll();
     }
 
