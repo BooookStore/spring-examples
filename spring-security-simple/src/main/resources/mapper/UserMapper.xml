@@ -8,4 +8,9 @@
         FROM users
         WHERE username = #{username}
     </select>
+    <select id="findRolesByUserId" resultType="string">
+        SELECT name
+        FROM roles
+        WHERE id = #{userId}
+    </select>
 </mapper>
