@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <meta charset="UTF-8">
     <title>Account</title>
@@ -15,13 +15,13 @@
           <li class="navbar-item">
             <a class="nav-link" href="/home">Home</a>
           </li>
-          <li class="navbar-item">
+          <li class="navbar-item" sec:authorize="hasRole('ADMIN')">
             <a class="nav-link">Manage</a>
           </li>
         </ul>
         <ul class="navbar-nav">
           <li class="navbar-item">
-            <a class="nav-link" href="/home/account" th:text="${username}">Account Setting</a>
+            <a class="nav-link" href="/home/account" sec:authentication="name">Account Setting</a>
           </li>
         </ul>
       </div>
