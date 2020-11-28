@@ -6,6 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class MyBatisUserDetailsService implements UserDetailsService {
 
@@ -20,10 +22,12 @@ public class MyBatisUserDetailsService implements UserDetailsService {
         UserEntity userEntity = userMapper.findUserByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("username not found"));
 
+        List<String> roles = userMapper.findRolesByUserId(userEntity.getId());
+
         return User.builder()
                 .username(userEntity.getUsername())
                 .password(userEntity.getPassword())
-                .roles("ADMIN")
+                .roles(roles.toArray(String[]::new))
                 .build();
     }
 
