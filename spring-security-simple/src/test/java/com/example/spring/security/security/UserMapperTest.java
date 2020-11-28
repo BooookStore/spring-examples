@@ -25,7 +25,8 @@ class UserMapperTest {
     @BeforeEach
     public void beforeEach() {
         // insert user
-        jdbcTemplate.update("INSERT INTO user VALUES (null, 'john', '12345')");
+        var userId = jdbcTemplate.queryForObject("SELECT nextval('users_id')", Integer.class);
+        jdbcTemplate.update("INSERT INTO users VALUES (?, ?, ?)", userId, "john", "12345");
     }
 
     @Test

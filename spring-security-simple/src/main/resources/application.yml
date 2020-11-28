@@ -1,7 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/spring
+    url: jdbc:postgresql://localhost:5432/spring
     username: spring
     password: spring
+    initialization-mode: always
 mybatis:
   mapper-locations: classpath:/mapper/**/*.xml

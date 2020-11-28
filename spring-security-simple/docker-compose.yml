@@ -1,13 +1,10 @@
 version: "3.8"
 services:
   database:
-    image: mysql:8
+    image: postgres:13
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
       - "./schema:/docker-entrypoint-initdb.d"
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: spring
-      MYSQL_PASSWORD: spring
-      MYSQL_DATABASE: spring
+      POSTGRES_PASSWORD: password
