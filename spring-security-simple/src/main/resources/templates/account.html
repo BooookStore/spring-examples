@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8">
     <title>Account</title>
@@ -38,7 +38,21 @@
           </div>
         </div>
         <div class="col">
-
+          <form>
+            <div class="form-group">
+              <label for="username">ユーザー名</label>
+              <input type="text" class="form-control" id="username" readonly th:value="${#authentication.name}"/>
+            </div>
+            <div class="form-group">
+              <label for="role">権限</label>
+              <input type="text" class="form-control" id="role" readonly th:value="${roles}"/>
+            </div>
+            <div class="form-group">
+              <label for="emailAddress">メールアドレス</label>
+              <input type="text" class="form-control" id="emailAddress" readonly
+                     th:value="${emailAddress}?: '登録されていません'"/>
+            </div>
+          </form>
         </div>
       </div>
     </div>
