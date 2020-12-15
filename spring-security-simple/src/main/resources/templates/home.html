@@ -13,18 +13,23 @@
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
           <li class="navbar-item">
-            <a class="nav-link" href="/home">Home</a>
+            <a class="nav-link" href="/home">ホーム</a>
           </li>
           <li class="navbar-item" sec:authorize="hasRole('ADMIN')">
-            <a class="nav-link">Manage</a>
+            <a class="nav-link">管理</a>
           </li>
         </ul>
         <ul class="navbar-nav">
           <li class="navbar-item">
-            <a class="nav-link" href="/home/account" sec:authentication="name">Account Setting</a>
+            <a class="nav-link" href="/home/account" sec:authentication="name">アカウント</a>
           </li>
         </ul>
       </div>
     </nav>
+
+    <div class="container mt-4">
+      <h1>ホーム</h1>
+      <p>ログイン後に遷移する画面です。</p>
+    </div>
   </body>
 </html>
