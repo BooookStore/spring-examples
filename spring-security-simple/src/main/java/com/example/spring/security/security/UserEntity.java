@@ -9,10 +9,13 @@ public class UserEntity {
 
     private String password;
 
-    public UserEntity(int id, String username, String password) {
+    private String emailAddress;
+
+    public UserEntity(int id, String username, String password, String emailAddress) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.emailAddress = emailAddress;
     }
 
     public int getId() {
@@ -39,4 +42,11 @@ public class UserEntity {
         this.password = password;
     }
 
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
 }

@@ -37,6 +37,7 @@ class UserMapperTest {
     public void loadUser() {
         Optional<UserEntity> john = userMapper.findUserByUsername("john");
         assertThat(john.get().getUsername()).isEqualTo("john");
+        assertThat(john.get().getEmailAddress()).isNull();
 
         List<String> roles = userMapper.findRolesByUserId(john.get().getId());
         assertThat(roles).hasSize(1).contains("ADMIN");
