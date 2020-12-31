@@ -2,7 +2,8 @@ package com.example.spring.security.controller;
 
 import com.example.spring.security.security.UserEntity;
 import com.example.spring.security.security.UserMapper;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -24,8 +25,8 @@ public class AccountSettingController {
 
     @GetMapping
     @Transactional(readOnly = true)
-    public String account(Authentication authentication, Model model) {
-        Optional<UserEntity> optional = userMapper.findUserByUsername(authentication.getName());
+    public String account(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        Optional<UserEntity> optional = userMapper.findUserByUsername(userDetails.getUsername());
         UserEntity userEntity = optional.orElseThrow();
 
         List<String> roles = userMapper.findRolesByUserId(userEntity.getId());
