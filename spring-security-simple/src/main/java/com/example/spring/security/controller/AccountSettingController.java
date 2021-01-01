@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -32,13 +33,13 @@ public class AccountSettingController {
 
     @GetMapping
     @Transactional(readOnly = true)
-    public String account(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+    public String account(@AuthenticationPrincipal UserDetails userDetails, @RequestParam(required = false) String accountChanged, Model model) {
+        if (accountChanged != null) model.addAttribute("accountChanged", true);
+
         UserEntity userEntity = getUserEntityOrElseThrow(userDetails);
-
         List<String> roles = userMapper.findRolesByUserId(userEntity.getId());
-
-        model.addAttribute("emailAddress", userEntity.getEmailAddress());
         model.addAttribute("roles", String.join(", ", roles));
+        model.addAttribute("emailAddress", userEntity.getEmailAddress());
 
         return "account";
     }
@@ -75,7 +76,7 @@ public class AccountSettingController {
             return "accountModify";
         }
 
-        return "redirect:/home/account";
+        return "redirect:/home/account?accountChanged";
     }
 
     private UserEntity getUserEntityOrElseThrow(UserDetails userDetails) {
