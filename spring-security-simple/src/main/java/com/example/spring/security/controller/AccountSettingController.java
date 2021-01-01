@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping("/home/account")
 public class AccountSettingController {
 
-    private Logger logger = LoggerFactory.getLogger(AccountSettingController.class.getName());
+    private final Logger logger = LoggerFactory.getLogger(AccountSettingController.class.getName());
 
     private final UserMapper userMapper;
 
