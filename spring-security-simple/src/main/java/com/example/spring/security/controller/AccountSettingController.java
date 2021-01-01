@@ -63,11 +63,18 @@ public class AccountSettingController {
 
     @PostMapping("accountModifySave")
     @Transactional
-    public String accountModifySave(@AuthenticationPrincipal UserDetails userDetails, @Valid AccountModifyForm form, BindingResult result) {
+    public String accountModifySave(@AuthenticationPrincipal UserDetails userDetails, @Valid AccountModifyForm form, BindingResult result, Model model) {
         logger.info("accept change account {}", form);
 
         if (result.hasErrors()) {
             logger.info("has invalidate form {}", form);
+
+            Optional<UserEntity> optional = userMapper.findUserByUsername(userDetails.getUsername());
+            UserEntity userEntity = optional.orElseThrow();
+
+            List<String> roles = userMapper.findRolesByUserId(userEntity.getId());
+            model.addAttribute("roles", String.join(", ", roles));
+
             return "accountModify";
         }
 
