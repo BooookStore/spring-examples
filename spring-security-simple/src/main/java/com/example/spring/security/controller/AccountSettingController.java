@@ -65,6 +65,7 @@ public class AccountSettingController {
     @Transactional
     public String accountModifySave(@AuthenticationPrincipal UserDetails userDetails, @Valid AccountModifyForm form, BindingResult result) {
         logger.info("accept change account {}", form);
+
         if (result.hasErrors()) {
             logger.info("has invalidate form {}", form);
             return "forward:/home/account/accountModify";
