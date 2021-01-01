@@ -19,6 +19,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/home/account")
+@Transactional
 public class AccountSettingController {
 
     private final Logger logger = LoggerFactory.getLogger(AccountSettingController.class.getName());
@@ -61,7 +62,6 @@ public class AccountSettingController {
     }
 
     @PostMapping("accountModifySave")
-    @Transactional
     public String accountModifySave(@AuthenticationPrincipal UserDetails userDetails, @Valid AccountModifyForm form, BindingResult result, Model model) {
         logger.info("accept change account {}", form);
 
