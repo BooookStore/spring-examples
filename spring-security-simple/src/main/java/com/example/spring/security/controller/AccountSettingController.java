@@ -9,10 +9,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,8 +63,13 @@ public class AccountSettingController {
 
     @PostMapping("accountModifySave")
     @Transactional
-    public String accountModifySave(@AuthenticationPrincipal UserDetails userDetails, AccountModifyForm form) {
+    public String accountModifySave(@AuthenticationPrincipal UserDetails userDetails, @Valid AccountModifyForm form, BindingResult result) {
         logger.info("accept change account {}", form);
+        if (result.hasErrors()) {
+            logger.info("has invalidate form {}", form);
+            return "forward:/home/account/accountModify";
+        }
+
         return "redirect:/home/account";
     }
 

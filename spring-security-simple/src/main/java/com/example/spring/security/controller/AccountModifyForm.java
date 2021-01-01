@@ -1,9 +1,13 @@
 package com.example.spring.security.controller;
 
+import javax.validation.constraints.NotBlank;
+
 public class AccountModifyForm {
 
+    @NotBlank
     private String userName;
 
+    @NotBlank
     private String emailAddress;
 
     public AccountModifyForm() {
