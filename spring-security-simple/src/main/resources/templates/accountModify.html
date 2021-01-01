@@ -41,7 +41,10 @@
           <form method="post" th:action="@{/home/account/accountModifySave}" th:object="${accountModifyForm}">
             <div class="form-group">
               <label for="username">ユーザー名</label>
-              <input type="text" class="form-control" id="username" th:field="*{userName}"/>
+              <input type="text" class="form-control"
+                     id="username" th:field="*{userName}"
+                     th:classappend="${#fields.hasErrors('userName') ? 'is-invalid' : ''}"/>
+              <div class="invalid-feedback" th:if="${#fields.hasErrors('userName')}">入力してください</div>
             </div>
             <div class="form-group">
               <label for="role">権限</label>
@@ -49,7 +52,10 @@
             </div>
             <div class="form-group">
               <label for="emailAddress">メールアドレス</label>
-              <input type="text" class="form-control" id="emailAddress" th:field="*{emailAddress}"/>
+              <input type="text" class="form-control"
+                     id="emailAddress" th:field="*{emailAddress}"
+                     th:classappend="${#fields.hasErrors('emailAddress') ? 'is-invalid' : ''}"/>
+              <div class="invalid-feedback" th:if="${#fields.hasErrors('emailAddress')}">入力してください</div>
             </div>
             <div class="d-flex flex-row-reverse">
               <a class="btn btn-secondary ml-2" role="button" th:href="@{/home/account}" href="#">キャンセル</a>

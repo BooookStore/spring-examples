@@ -68,7 +68,7 @@ public class AccountSettingController {
 
         if (result.hasErrors()) {
             logger.info("has invalidate form {}", form);
-            return "forward:/home/account/accountModify";
+            return "accountModify";
         }
 
         return "redirect:/home/account";
