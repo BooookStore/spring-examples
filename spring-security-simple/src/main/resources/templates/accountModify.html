@@ -41,7 +41,7 @@
           <form>
             <div class="form-group">
               <label for="username">ユーザー名</label>
-              <input type="text" class="form-control" id="username" readonly th:value="${#authentication.name}"/>
+              <input type="text" class="form-control" id="username" th:value="${#authentication.name}"/>
             </div>
             <div class="form-group">
               <label for="role">権限</label>
@@ -49,11 +49,12 @@
             </div>
             <div class="form-group">
               <label for="emailAddress">メールアドレス</label>
-              <input type="text" class="form-control" id="emailAddress" readonly
+              <input type="text" class="form-control" id="emailAddress"
                      th:value="${emailAddress}?: '登録されていません'"/>
             </div>
           </form>
-          <a class="btn btn-primary" role="button" th:href="@{/home/account/accountModify}" href="#">変更する</a>
+          <a class="btn btn-primary" role="button" th:href="@{/home/account/accountModifySave}" href="#">変更を保存する</a>
+          <a class="btn btn-secondary" role="button" th:href="@{/home/account}" href="#">キャンセル</a>
         </div>
       </div>
     </div>

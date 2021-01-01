@@ -37,4 +37,18 @@ public class AccountSettingController {
         return "account";
     }
 
+    @GetMapping("accountModify")
+    @Transactional(readOnly = true)
+    public String accountModify(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        Optional<UserEntity> optional = userMapper.findUserByUsername(userDetails.getUsername());
+        UserEntity userEntity = optional.orElseThrow();
+
+        List<String> roles = userMapper.findRolesByUserId(userEntity.getId());
+
+        model.addAttribute("emailAddress", userEntity.getEmailAddress());
+        model.addAttribute("roles", String.join(", ", roles));
+
+        return "accountModify";
+    }
+
 }
