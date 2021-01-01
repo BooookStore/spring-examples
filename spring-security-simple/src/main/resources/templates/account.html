@@ -53,7 +53,9 @@
                      th:value="${emailAddress}?: '登録されていません'"/>
             </div>
           </form>
-          <a class="btn btn-primary" role="button" th:href="@{/home/account/accountModify}" href="#">変更する</a>
+          <div class="d-flex flex-row-reverse">
+            <a class="btn btn-primary" role="button" th:href="@{/home/account/accountModify}" href="#">変更する</a>
+          </div>
         </div>
       </div>
     </div>
