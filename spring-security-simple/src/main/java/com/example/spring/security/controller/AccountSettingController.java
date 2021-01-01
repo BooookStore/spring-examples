@@ -47,9 +47,11 @@ public class AccountSettingController {
     public String accountModify(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         UserEntity userEntity = getUserEntityOrElseThrow(userDetails);
 
+        // ロールを表示
         List<String> roles = userMapper.findRolesByUserId(userEntity.getId());
         model.addAttribute("roles", String.join(", ", roles));
 
+        // 既存のアカウント設定を表示
         AccountModifyForm accountModifyForm = new AccountModifyForm();
         accountModifyForm.setUserName(userEntity.getUsername());
         accountModifyForm.setEmailAddress(userEntity.getEmailAddress());
@@ -65,8 +67,11 @@ public class AccountSettingController {
 
         if (result.hasErrors()) {
             logger.info("has invalidate form {}", form);
+
+            // ロールを表示
             List<String> roles = userMapper.findRolesByUserId(getUserEntityOrElseThrow(userDetails).getId());
             model.addAttribute("roles", String.join(", ", roles));
+
             return "accountModify";
         }
 
