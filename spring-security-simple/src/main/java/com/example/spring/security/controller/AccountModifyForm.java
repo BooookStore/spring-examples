@@ -4,14 +4,14 @@ public class AccountModifyForm {
 
     private String userName;
 
-    private String mailAddress;
+    private String emailAddress;
 
     public AccountModifyForm() {
     }
 
     public AccountModifyForm(String userName, String mailAddress) {
         this.userName = userName;
-        this.mailAddress = mailAddress;
+        this.emailAddress = mailAddress;
     }
 
     public String getUserName() {
@@ -22,19 +22,19 @@ public class AccountModifyForm {
         this.userName = userName;
     }
 
-    public String getMailAddress() {
-        return mailAddress;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
-    public void setMailAddress(String mailAddress) {
-        this.mailAddress = mailAddress;
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     @Override
     public String toString() {
         return "AccountModifyForm{" +
                 "userName='" + userName + '\'' +
-                ", mailAddress='" + mailAddress + '\'' +
+                ", mailAddress='" + emailAddress + '\'' +
                 '}';
     }
 }

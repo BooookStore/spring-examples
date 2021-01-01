@@ -49,9 +49,12 @@ public class AccountSettingController {
         UserEntity userEntity = optional.orElseThrow();
 
         List<String> roles = userMapper.findRolesByUserId(userEntity.getId());
-
-        model.addAttribute("emailAddress", userEntity.getEmailAddress());
         model.addAttribute("roles", String.join(", ", roles));
+
+        AccountModifyForm accountModifyForm = new AccountModifyForm();
+        accountModifyForm.setUserName(userEntity.getUsername());
+        accountModifyForm.setEmailAddress(userEntity.getEmailAddress());
+        model.addAttribute("accountModifyForm", accountModifyForm);
 
         return "accountModify";
     }
