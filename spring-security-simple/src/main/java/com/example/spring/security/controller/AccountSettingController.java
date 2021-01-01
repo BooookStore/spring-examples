@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/home/account")
@@ -33,8 +32,7 @@ public class AccountSettingController {
     @GetMapping
     @Transactional(readOnly = true)
     public String account(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        Optional<UserEntity> optional = userMapper.findUserByUsername(userDetails.getUsername());
-        UserEntity userEntity = optional.orElseThrow();
+        UserEntity userEntity = getUserEntityOrElseThrow(userDetails);
 
         List<String> roles = userMapper.findRolesByUserId(userEntity.getId());
 
@@ -47,8 +45,7 @@ public class AccountSettingController {
     @GetMapping("accountModify")
     @Transactional(readOnly = true)
     public String accountModify(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        Optional<UserEntity> optional = userMapper.findUserByUsername(userDetails.getUsername());
-        UserEntity userEntity = optional.orElseThrow();
+        UserEntity userEntity = getUserEntityOrElseThrow(userDetails);
 
         List<String> roles = userMapper.findRolesByUserId(userEntity.getId());
         model.addAttribute("roles", String.join(", ", roles));
@@ -68,17 +65,16 @@ public class AccountSettingController {
 
         if (result.hasErrors()) {
             logger.info("has invalidate form {}", form);
-
-            Optional<UserEntity> optional = userMapper.findUserByUsername(userDetails.getUsername());
-            UserEntity userEntity = optional.orElseThrow();
-
-            List<String> roles = userMapper.findRolesByUserId(userEntity.getId());
+            List<String> roles = userMapper.findRolesByUserId(getUserEntityOrElseThrow(userDetails).getId());
             model.addAttribute("roles", String.join(", ", roles));
-
             return "accountModify";
         }
 
         return "redirect:/home/account";
+    }
+
+    private UserEntity getUserEntityOrElseThrow(UserDetails userDetails) {
+        return userMapper.findUserByUsername(userDetails.getUsername()).orElseThrow();
     }
 
 }
