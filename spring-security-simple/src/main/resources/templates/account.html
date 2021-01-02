@@ -13,12 +13,7 @@
       <h1>アカウント</h1>
       <p>アカウント情報ページです。アカウント情報の確認変更を行うことができます。</p>
       <div class="row mt-4">
-        <div class="col-3">
-          <div class="list-group">
-            <a class="list-group-item list-group-item-action active" href="/home/account">基本</a>
-            <a class="list-group-item list-group-item-action" href="/home/account">パスワード</a>
-          </div>
-        </div>
+        <div class="col-3" th:insert="accountMenuFragment :: account-menu ('基本')"></div>
         <div class="col">
           <div class="alert alert-success" th:if="${accountChanged}">アカウントが更新されました。</div>
           <form>
