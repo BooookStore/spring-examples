@@ -13,4 +13,10 @@
         FROM roles
         WHERE id = #{userId}
     </select>
+    <update id="updateUser">
+        UPDATE users
+        SET username     = #{username},
+            emailaddress = #{emailAddress}
+        WHERE id = #{id}
+    </update>
 </mapper>

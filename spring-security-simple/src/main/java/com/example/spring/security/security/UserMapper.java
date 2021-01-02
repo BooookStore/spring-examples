@@ -14,4 +14,6 @@ public interface UserMapper {
 
     List<String> findRolesByUserId(int userId);
 
+    void updateUser(UserEntity userEntity);
+
 }

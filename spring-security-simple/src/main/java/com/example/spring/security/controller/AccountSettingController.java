@@ -4,7 +4,11 @@ import com.example.spring.security.security.UserEntity;
 import com.example.spring.security.security.UserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,7 +80,27 @@ public class AccountSettingController {
             return "accountModify";
         }
 
+        // DBを更新
+        UserEntity userEntity = getUserEntityOrElseThrow(userDetails);
+        userEntity.setUsername(form.getUserName());
+        userEntity.setEmailAddress(form.getEmailAddress());
+        userMapper.updateUser(userEntity);
+
+        updateSecurityContext(userEntity);
+
         return "redirect:/home/account?accountChanged";
+    }
+
+    private void updateSecurityContext(UserEntity userEntity) {
+        UserDetails user = User.builder()
+                .username(userEntity.getUsername())
+                .password(userEntity.getPassword())
+                .roles(userMapper.findRolesByUserId(userEntity.getId()).toArray(String[]::new))
+                .build();
+        SecurityContext context = SecurityContextHolder.getContext();
+        context.setAuthentication(new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities()));
+
+        logger.info("security context updated to {}", user);
     }
 
     private UserEntity getUserEntityOrElseThrow(UserDetails userDetails) {
