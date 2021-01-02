@@ -91,6 +91,11 @@ public class AccountSettingController {
         return "redirect:/home/account?accountChanged";
     }
 
+    @GetMapping("password")
+    public String password() {
+        return "accountPassword";
+    }
+
     private void updateSecurityContext(UserEntity userEntity) {
         UserDetails user = User.builder()
                 .username(userEntity.getUsername())
