@@ -16,7 +16,8 @@
     <update id="updateUser">
         UPDATE users
         SET username     = #{username},
-            emailaddress = #{emailAddress}
+            emailaddress = #{emailAddress},
+            password     = #{password}
         WHERE id = #{id}
     </update>
 </mapper>

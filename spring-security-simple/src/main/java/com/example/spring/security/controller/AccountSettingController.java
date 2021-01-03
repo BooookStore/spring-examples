@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -31,8 +32,11 @@ public class AccountSettingController {
 
     private final UserMapper userMapper;
 
-    public AccountSettingController(UserMapper userMapper) {
+    private final PasswordEncoder passwordEncoder;
+
+    public AccountSettingController(UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
@@ -112,6 +116,14 @@ public class AccountSettingController {
 
             return "accountPasswordModify";
         }
+
+        UserEntity userEntity = getUserEntityOrElseThrow(userDetails);
+        boolean matchPassword = passwordEncoder.matches(passwordModifyForm.getCurrentPassword(), userEntity.getPassword());
+        if (!matchPassword) return "accountPasswordModify";
+
+        String encodedNewPassword = passwordEncoder.encode(passwordModifyForm.getNewPassword());
+        userEntity.setPassword(encodedNewPassword);
+        userMapper.updateUser(userEntity);
 
         return "redirect:/home/account/password?passwordChanged";
     }
