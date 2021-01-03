@@ -86,7 +86,7 @@ public class AccountSettingController {
         userEntity.setEmailAddress(form.getEmailAddress());
         userMapper.updateUser(userEntity);
 
-        updateSecurityContext(userEntity);
+        reflectAccountModifyToSecurityContext(userEntity);
 
         return "redirect:/home/account?accountChanged";
     }
@@ -96,7 +96,7 @@ public class AccountSettingController {
         return "accountPassword";
     }
 
-    private void updateSecurityContext(UserEntity userEntity) {
+    private void reflectAccountModifyToSecurityContext(UserEntity userEntity) {
         UserDetails user = User.builder()
                 .username(userEntity.getUsername())
                 .password(userEntity.getPassword())
