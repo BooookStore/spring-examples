@@ -1,5 +1,6 @@
 package com.example.spring.security.controller;
 
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotBlank;
 
 public class PasswordModifyForm {
@@ -20,6 +21,14 @@ public class PasswordModifyForm {
         this.currentPassword = currentPassword;
         this.newPassword = newPassword;
         this.newPasswordCheck = newPasswordCheck;
+    }
+
+    @AssertTrue
+    public boolean isNewPasswordSame() {
+        if (newPassword == null) return true;
+        if (newPasswordCheck == null) return true;
+
+        return newPassword.equals(newPasswordCheck);
     }
 
     public String getCurrentPassword() {
