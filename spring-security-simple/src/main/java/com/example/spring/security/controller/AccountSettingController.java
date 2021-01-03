@@ -92,8 +92,28 @@ public class AccountSettingController {
     }
 
     @GetMapping("password")
-    public String password() {
+    public String password(@RequestParam(required = false) String passwordChanged, Model model) {
+        if (passwordChanged != null) model.addAttribute("passwordChanged", true);
         return "accountPassword";
+    }
+
+    @GetMapping("passwordModify")
+    public String passwordModify(Model model) {
+        model.addAttribute("passwordModifyForm", new PasswordModifyForm());
+        return "accountPasswordModify";
+    }
+
+    @PostMapping("passwordModifySave")
+    public String passwordModifySave(@AuthenticationPrincipal UserDetails userDetails, @Valid PasswordModifyForm passwordModifyForm, BindingResult result) {
+        logger.info("accept change password {}", userDetails.getUsername());
+
+        if (result.hasErrors()) {
+            logger.info("has invalidate form {}", userDetails.getUsername());
+
+            return "accountPasswordModify";
+        }
+
+        return "redirect:/home/account/password?passwordChanged";
     }
 
     private void reflectAccountModifyToSecurityContext(UserEntity userEntity) {
