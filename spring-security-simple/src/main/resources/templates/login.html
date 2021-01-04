@@ -12,6 +12,7 @@
         <div class="col">
           <form class="w-50 mx-auto p-3 bg-light" method="post" th:action="@{/login}">
             <h3 class="mb-4 text-center">ログイン</h3>
+            <div class="alert alert-success" role="alert" th:if="${logout}">ログアウトしました。</div>
             <div class="form-group">
               <label for="username">ユーザー名</label>
               <input class="form-control" id="username" name="username" type="text"/>
