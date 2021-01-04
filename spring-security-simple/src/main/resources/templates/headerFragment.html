@@ -23,6 +23,9 @@
             <a class="nav-link" th:href="@{/home/account}" sec:authentication="name">アカウント</a>
           </li>
         </ul>
+        <form class="form-inline" method="post" th:action="@{/logout}" action="#">
+          <button class="btn btn-secondary" type="submit">ログアウト</button>
+        </form>
       </div>
     </nav>
   </body>
