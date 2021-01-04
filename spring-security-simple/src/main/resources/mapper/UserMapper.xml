@@ -20,4 +20,15 @@
             password     = #{password}
         WHERE id = #{id}
     </update>
+    <insert id="insertUser">
+        INSERT INTO users(id, username, password, emailaddress)
+        VALUES (#{userId}, #{username}, #{password}, #{emailAddress})
+    </insert>
+    <insert id="insertRole">
+        INSERT INTO roles(id, name)
+        VALUES (#{id}, #{role})
+    </insert>
+    <select id="generateNextIdentity">
+        SELECT nextval(users_id)
+    </select>
 </mapper>

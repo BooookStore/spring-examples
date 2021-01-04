@@ -1,6 +1,7 @@
 package com.example.spring.security.security;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,5 +16,11 @@ public interface UserMapper {
     List<String> findRolesByUserId(int userId);
 
     void updateUser(UserEntity userEntity);
+
+    void insertUser(UserEntity newUserEntity);
+
+    void insertRole(@Param("id") int id, @Param("role") String role);
+
+    int generateNextIdentity();
 
 }
