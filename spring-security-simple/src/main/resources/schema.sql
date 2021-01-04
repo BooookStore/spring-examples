@@ -12,8 +12,7 @@ CREATE TABLE IF NOT EXISTS roles
 (
     id   INT          NOT NULL,
     name VARCHAR(255) NOT NULL,
-    FOREIGN KEY (id) REFERENCES users (id),
-    UNIQUE (name)
+    FOREIGN KEY (id) REFERENCES users (id)
 );
 
 CREATE SEQUENCE IF NOT EXISTS users_id MINVALUE 5;
