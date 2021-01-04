@@ -44,7 +44,7 @@ public class AccountSettingController {
     public String account(@AuthenticationPrincipal UserDetails userDetails, @RequestParam(required = false) String accountChanged, Model model) {
         if (accountChanged != null) model.addAttribute("accountChanged", true);
 
-        UserEntity userEntity = getUserEntityOrElseThrow(userDetails);
+        UserEntity userEntity = getUserEntityOrElseThrow(userDetails.getUsername());
         List<String> roles = userMapper.findRolesByUserId(userEntity.getId());
         model.addAttribute("roles", String.join(", ", roles));
         model.addAttribute("emailAddress", userEntity.getEmailAddress());
@@ -55,7 +55,7 @@ public class AccountSettingController {
     @GetMapping("accountModify")
     @Transactional(readOnly = true)
     public String accountModify(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        UserEntity userEntity = getUserEntityOrElseThrow(userDetails);
+        UserEntity userEntity = getUserEntityOrElseThrow(userDetails.getUsername());
 
         // ロールを表示
         List<String> roles = userMapper.findRolesByUserId(userEntity.getId());
@@ -78,14 +78,14 @@ public class AccountSettingController {
             logger.info("has invalidate form {}", form);
 
             // ロールを表示
-            List<String> roles = userMapper.findRolesByUserId(getUserEntityOrElseThrow(userDetails).getId());
+            List<String> roles = userMapper.findRolesByUserId(getUserEntityOrElseThrow(userDetails.getUsername()).getId());
             model.addAttribute("roles", String.join(", ", roles));
 
             return "accountModify";
         }
 
         // DBを更新
-        UserEntity userEntity = getUserEntityOrElseThrow(userDetails);
+        UserEntity userEntity = getUserEntityOrElseThrow(userDetails.getUsername());
         userEntity.setUsername(form.getUserName());
         userEntity.setEmailAddress(form.getEmailAddress());
         userMapper.updateUser(userEntity);
@@ -117,12 +117,13 @@ public class AccountSettingController {
             return "accountPasswordModify";
         }
 
-        UserEntity userEntity = getUserEntityOrElseThrow(userDetails);
+        // 保存されているパスワードと一致しているか検証
+        UserEntity userEntity = getUserEntityOrElseThrow(userDetails.getUsername());
         boolean matchPassword = passwordEncoder.matches(passwordModifyForm.getCurrentPassword(), userEntity.getPassword());
         if (!matchPassword) return "accountPasswordModify";
 
-        String encodedNewPassword = passwordEncoder.encode(passwordModifyForm.getNewPassword());
-        userEntity.setPassword(encodedNewPassword);
+        // 新しいパスワードを保存
+        userEntity.setPassword(passwordEncoder.encode(passwordModifyForm.getNewPassword()));
         userMapper.updateUser(userEntity);
 
         return "redirect:/home/account/password?passwordChanged";
@@ -140,8 +141,8 @@ public class AccountSettingController {
         logger.info("security context updated to {}", user);
     }
 
-    private UserEntity getUserEntityOrElseThrow(UserDetails userDetails) {
-        return userMapper.findUserByUsername(userDetails.getUsername()).orElseThrow();
+    private UserEntity getUserEntityOrElseThrow(String username) {
+        return userMapper.findUserByUsername(username).orElseThrow();
     }
 
 }
