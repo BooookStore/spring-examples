@@ -8,3 +8,11 @@ services:
       - "./schema:/docker-entrypoint-initdb.d"
     environment:
       POSTGRES_PASSWORD: password
+  webapplication:
+    depends_on: [ database ]
+    build: ./
+    image: spring-security-simple
+    ports:
+      - "8080:8080"
+    environment:
+      spring.datasource.url: jdbc:postgresql://database:5432/spring
