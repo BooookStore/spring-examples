@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <header>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  </header>
+  <body>
+    <div class="list-group" th:fragment="account-menu (active)">
+      <a class="list-group-item list-group-item-action"
+         th:classappend="${active eq '基本' ? 'active' : ''}"
+         href="/home/account">基本</a>
+      <a class="list-group-item list-group-item-action"
+         th:classappend="${active eq 'パスワード' ? 'active' : ''}"
+         href="/home/account/password">パスワード</a>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title>Account</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  </head>
+  <body>
+    <div th:replace="headerFragment :: header"></div>
+
+    <div class="container mt-4">
+      <h1>アカウント</h1>
+      <p>アカウント情報ページです。アカウント情報の確認変更を行うことができます。</p>
+      <div class="row mt-4">
+        <div class="col-3">
+          <div class="list-group">
+            <a class="list-group-item list-group-item-action active" href="/home/account">基本</a>
+            <a class="list-group-item list-group-item-action" href="/home/account">パスワード</a>
+          </div>
+        </div>
+        <div class="col">
+          <form method="post" th:action="@{/home/account/accountModifySave}" th:object="${accountModifyForm}">
+            <div class="form-group">
+              <label for="username">ユーザー名</label>
+              <input type="text" class="form-control"
+                     id="username" th:field="*{userName}"
+                     th:classappend="${#fields.hasErrors('userName') ? 'is-invalid' : ''}"/>
+              <div class="invalid-feedback" th:if="${#fields.hasErrors('userName')}">入力してください</div>
+            </div>
+            <div class="form-group">
+              <label for="role">権限</label>
+              <input type="text" class="form-control" id="role" readonly th:value="${roles}"/>
+            </div>
+            <div class="form-group">
+              <label for="emailAddress">メールアドレス</label>
+              <input type="text" class="form-control"
+                     id="emailAddress" th:field="*{emailAddress}"
+                     th:classappend="${#fields.hasErrors('emailAddress') ? 'is-invalid' : ''}"/>
+              <div class="invalid-feedback" th:if="${#fields.hasErrors('emailAddress')}">入力してください</div>
+            </div>
+            <div class="d-flex flex-row-reverse">
+              <a class="btn btn-secondary ml-2" role="button" th:href="@{/home/account}" href="#">キャンセル</a>
+              <button class="btn btn-primary" type="submit">変更を保存する</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

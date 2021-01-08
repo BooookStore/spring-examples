@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row mt-5">
+        <div class="col">
+          <form class="w-50 mx-auto p-3 bg-light" method="post" th:action="@{/login}">
+            <h3 class="mb-4 text-center">ログイン</h3>
+            <div class="alert alert-success" role="alert" th:if="${param.logout}">ログアウトしました。</div>
+            <div class="alert alert-danger" role="alert" th:if="${param.error}">ユーザー名またはパスワードが違います。</div>
+            <div class="form-group">
+              <label for="username">ユーザー名</label>
+              <input class="form-control" id="username" name="username" type="text"/>
+            </div>
+            <div class="form-group">
+              <label for="password">パスワード</label>
+              <input class="form-control" id="password" name="password" type="password"/>
+            </div>
+            <div class="d-flex flex-row-reverse">
+              <button class="btn btn-primary" type="submit">ログイン</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

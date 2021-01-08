@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title>Account</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  </head>
+  <body>
+    <div th:replace="headerFragment :: header"></div>
+
+    <div class="container mt-4">
+      <h1>アカウント</h1>
+      <p>アカウント情報ページです。アカウント情報の確認変更を行うことができます。</p>
+      <div class="row mt-4">
+        <div class="col-3" th:insert="accountMenuFragment :: account-menu ('基本')"></div>
+        <div class="col">
+          <div class="alert alert-success" th:if="${accountChanged}">アカウントが更新されました。</div>
+          <form>
+            <div class="form-group">
+              <label for="username">ユーザー名</label>
+              <input type="text" class="form-control" id="username" readonly th:value="${#authentication.name}"/>
+            </div>
+            <div class="form-group">
+              <label for="role">権限</label>
+              <input type="text" class="form-control" id="role" readonly th:value="${roles}"/>
+            </div>
+            <div class="form-group">
+              <label for="emailAddress">メールアドレス</label>
+              <input type="text" class="form-control" id="emailAddress" readonly
+                     th:value="${emailAddress}?: '登録されていません'"/>
+            </div>
+          </form>
+          <div class="d-flex flex-row-reverse">
+            <a class="btn btn-primary" role="button" th:href="@{/home/account/accountModify}" href="#">変更する</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
