@@ -49,4 +49,14 @@ public class Document {
         this.reviewerUsername = reviewerUsername;
     }
 
+    @Override
+    public String toString() {
+        return "Document{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", ownerUsername='" + ownerUsername + '\'' +
+                ", reviewerUsername='" + reviewerUsername + '\'' +
+                '}';
+    }
+
 }
