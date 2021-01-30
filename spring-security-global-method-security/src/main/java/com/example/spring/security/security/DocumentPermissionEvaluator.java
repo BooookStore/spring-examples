@@ -21,7 +21,7 @@ public class DocumentPermissionEvaluator implements PermissionEvaluator {
         logger.info("evaluate permission based on {} with permission {}", targetDomainObject, permission);
 
         // permission と同じ authority を保持しているユーザーを認可する
-        if (authentication.getAuthorities().stream().anyMatch(auth -> auth.equals(new SimpleGrantedAuthority(permission.toString())))) {
+        if (authentication.getAuthorities().stream().anyMatch(auth -> auth.equals(new SimpleGrantedAuthority("ROLE_admin")))) {
             return true;
         }
 
