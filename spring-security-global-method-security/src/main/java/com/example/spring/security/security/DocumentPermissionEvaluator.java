@@ -15,7 +15,7 @@ public class DocumentPermissionEvaluator implements PermissionEvaluator {
 
     private final Logger logger = LoggerFactory.getLogger(DocumentPermissionEvaluator.class.getName());
 
-    @SuppressWarnings("RedundantIfStatement")
+    @SuppressWarnings({"RedundantIfStatement", "StatementWithEmptyBody"})
     @Override
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
         logger.info("evaluate permission based on {} with permission {}", targetDomainObject, permission);
@@ -28,13 +28,17 @@ public class DocumentPermissionEvaluator implements PermissionEvaluator {
         var document = (Document) targetDomainObject;
         var username = authentication.getName();
 
-        if (document.getOwnerUsername().equals(username)) {
-            return true;
-        } else if (document.getReviewerUsername().equals(username)) {
-            return true;
+        if (permission.equals("read")) {
+            if (document.getOwnerUsername().equals(username)) {
+                return true;
+            } else if (document.getReviewerUsername().equals(username)) {
+                return true;
+            }
         } else {
-            return false;
+            // other permission ...
         }
+
+        return false;
     }
 
     @Override

@@ -14,7 +14,7 @@ public class DocumentService {
         this.documentRepository = documentRepository;
     }
 
-    @PostAuthorize("hasPermission(returnObject, 'ROLE_admin')")
+    @PostAuthorize("hasPermission(returnObject, 'read')")
     public Document getDocument(String documentId) {
         return documentRepository.findById(documentId);
     }
