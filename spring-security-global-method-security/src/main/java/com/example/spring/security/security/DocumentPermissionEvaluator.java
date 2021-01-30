@@ -18,7 +18,6 @@ public class DocumentPermissionEvaluator implements PermissionEvaluator {
     @SuppressWarnings("RedundantIfStatement")
     @Override
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
-        System.out.println(Thread.currentThread().getId());
         logger.info("evaluate permission based on {} with permission {}", targetDomainObject, permission);
 
         // permission と同じ authority を保持しているユーザーを認可する
