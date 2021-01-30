@@ -48,6 +48,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .roles("normal")
                 .build()
         );
+        userDetailsManager.createUser(User.builder()
+                .username("Takahasi")
+                .password("Takahasi")
+                .roles("admin")
+                .build()
+        );
 
         return userDetailsManager;
     }

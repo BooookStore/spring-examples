@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
@@ -19,6 +20,11 @@ public class DocumentPermissionEvaluator implements PermissionEvaluator {
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
         System.out.println(Thread.currentThread().getId());
         logger.info("evaluate permission based on {} with permission {}", targetDomainObject, permission);
+
+        // permission と同じ authority を保持しているユーザーを認可する
+        if (authentication.getAuthorities().stream().anyMatch(auth -> auth.equals(new SimpleGrantedAuthority(permission.toString())))) {
+            return true;
+        }
 
         var document = (Document) targetDomainObject;
         var username = authentication.getName();
