@@ -66,6 +66,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //noinspection Convert2MethodRef
+        http.csrf(c -> c.disable());
+
         http.httpBasic();
         http.authorizeRequests().mvcMatchers("document/**").authenticated();
     }
