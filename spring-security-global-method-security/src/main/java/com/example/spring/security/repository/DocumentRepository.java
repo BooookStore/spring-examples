@@ -3,6 +3,7 @@ package com.example.spring.security.repository;
 import com.example.spring.security.model.Document;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -17,6 +18,11 @@ public class DocumentRepository {
 
     public Document findById(String documentId) {
         return documents.stream().filter(d -> d.getId().equals(documentId)).findFirst().orElseThrow();
+    }
+
+    public void addAll(Collection<Document> documents) {
+        //noinspection ConstantConditions
+        this.documents.addAll(documents);
     }
 
 }
