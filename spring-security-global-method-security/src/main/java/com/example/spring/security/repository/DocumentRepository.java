@@ -25,4 +25,8 @@ public class DocumentRepository {
         this.documents.addAll(documents);
     }
 
+    public List<Document> findAll() {
+        return documents;
+    }
+
 }

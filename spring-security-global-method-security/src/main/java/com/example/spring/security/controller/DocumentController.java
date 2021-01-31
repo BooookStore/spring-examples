@@ -20,6 +20,11 @@ public class DocumentController {
         return documentService.getDocument(documentId);
     }
 
+    @GetMapping("document")
+    public List<Document> getAllDocument() {
+        return documentService.getAllDocument();
+    }
+
     @PostMapping("document")
     public void addDocuments(@RequestBody List<Document> documents) {
         documentService.addDocuments(documents);
