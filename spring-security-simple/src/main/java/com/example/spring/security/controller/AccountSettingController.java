@@ -1,7 +1,7 @@
 package com.example.spring.security.controller;
 
 import com.example.spring.security.security.UserEntity;
-import com.example.spring.security.security.UserMapper;
+import com.example.spring.security.security.SecurityUserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,12 +30,12 @@ public class AccountSettingController {
 
     private final Logger logger = LoggerFactory.getLogger(AccountSettingController.class.getName());
 
-    private final UserMapper userMapper;
+    private final SecurityUserMapper securityUserMapper;
 
     private final PasswordEncoder passwordEncoder;
 
-    public AccountSettingController(UserMapper userMapper, PasswordEncoder passwordEncoder) {
-        this.userMapper = userMapper;
+    public AccountSettingController(SecurityUserMapper securityUserMapper, PasswordEncoder passwordEncoder) {
+        this.securityUserMapper = securityUserMapper;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -45,7 +45,7 @@ public class AccountSettingController {
         if (accountChanged != null) model.addAttribute("accountChanged", true);
 
         UserEntity userEntity = getUserEntityOrElseThrow(userDetails.getUsername());
-        List<String> roles = userMapper.findRolesByUserId(userEntity.getId());
+        List<String> roles = securityUserMapper.findRolesByUserId(userEntity.getId());
         model.addAttribute("roles", String.join(", ", roles));
         model.addAttribute("emailAddress", userEntity.getEmailAddress());
 
@@ -58,7 +58,7 @@ public class AccountSettingController {
         UserEntity userEntity = getUserEntityOrElseThrow(userDetails.getUsername());
 
         // ロールを表示
-        List<String> roles = userMapper.findRolesByUserId(userEntity.getId());
+        List<String> roles = securityUserMapper.findRolesByUserId(userEntity.getId());
         model.addAttribute("roles", String.join(", ", roles));
 
         // 既存のアカウント設定を表示
@@ -78,7 +78,7 @@ public class AccountSettingController {
             logger.info("has invalidate form {}", form);
 
             // ロールを表示
-            List<String> roles = userMapper.findRolesByUserId(getUserEntityOrElseThrow(userDetails.getUsername()).getId());
+            List<String> roles = securityUserMapper.findRolesByUserId(getUserEntityOrElseThrow(userDetails.getUsername()).getId());
             model.addAttribute("roles", String.join(", ", roles));
 
             return "accountModify";
@@ -88,7 +88,7 @@ public class AccountSettingController {
         UserEntity userEntity = getUserEntityOrElseThrow(userDetails.getUsername());
         userEntity.setUsername(form.getUserName());
         userEntity.setEmailAddress(form.getEmailAddress());
-        userMapper.updateUser(userEntity);
+        securityUserMapper.updateUser(userEntity);
 
         reflectAccountModifyToSecurityContext(userEntity);
 
@@ -124,7 +124,7 @@ public class AccountSettingController {
 
         // 新しいパスワードを保存
         userEntity.setPassword(passwordEncoder.encode(passwordModifyForm.getNewPassword()));
-        userMapper.updateUser(userEntity);
+        securityUserMapper.updateUser(userEntity);
 
         return "redirect:/home/account/password?passwordChanged";
     }
@@ -133,7 +133,7 @@ public class AccountSettingController {
         UserDetails user = User.builder()
                 .username(userEntity.getUsername())
                 .password(userEntity.getPassword())
-                .roles(userMapper.findRolesByUserId(userEntity.getId()).toArray(String[]::new))
+                .roles(securityUserMapper.findRolesByUserId(userEntity.getId()).toArray(String[]::new))
                 .build();
         SecurityContext context = SecurityContextHolder.getContext();
         context.setAuthentication(new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities()));
@@ -142,7 +142,7 @@ public class AccountSettingController {
     }
 
     private UserEntity getUserEntityOrElseThrow(String username) {
-        return userMapper.findUserByUsername(username).orElseThrow();
+        return securityUserMapper.findUserByUsername(username).orElseThrow();
     }
 
 }

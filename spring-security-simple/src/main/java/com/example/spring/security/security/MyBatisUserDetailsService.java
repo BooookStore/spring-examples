@@ -11,18 +11,18 @@ import java.util.List;
 @Component
 public class MyBatisUserDetailsService implements UserDetailsService {
 
-    private final UserMapper userMapper;
+    private final SecurityUserMapper securityUserMapper;
 
-    public MyBatisUserDetailsService(UserMapper userMapper) {
-        this.userMapper = userMapper;
+    public MyBatisUserDetailsService(SecurityUserMapper securityUserMapper) {
+        this.securityUserMapper = securityUserMapper;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity userEntity = userMapper.findUserByUsername(username)
+        UserEntity userEntity = securityUserMapper.findUserByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("username not found"));
 
-        List<String> roles = userMapper.findRolesByUserId(userEntity.getId());
+        List<String> roles = securityUserMapper.findRolesByUserId(userEntity.getId());
 
         return User.builder()
                 .username(userEntity.getUsername())

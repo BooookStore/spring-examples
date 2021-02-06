@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Component
 @Mapper
-public interface UserMapper {
+public interface SecurityUserMapper {
 
     Optional<UserEntity> findUserByUsername(String username);
 
