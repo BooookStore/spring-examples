@@ -1,0 +1,11 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.spring.security.repository.mapper.RoleMapper">
+    <select id="findById" resultType="com.example.spring.security.repository.mapper.RoleTable">
+        SELECT *
+        FROM roles
+        WHERE id = #{id}
+    </select>
+</mapper>
