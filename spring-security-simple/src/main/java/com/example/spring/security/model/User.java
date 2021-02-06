@@ -1,5 +1,7 @@
 package com.example.spring.security.model;
 
+import java.util.List;
+
 public class User {
 
     private int id;
@@ -8,10 +10,13 @@ public class User {
 
     private String emailAddress;
 
-    public User(int id, String username, String emailAddress) {
+    private List<String> roles;
+
+    public User(int id, String username, String emailAddress, List<String> roles) {
         this.id = id;
         this.username = username;
         this.emailAddress = emailAddress;
+        this.roles = roles;
     }
 
     public int getId() {
@@ -38,13 +43,21 @@ public class User {
         this.emailAddress = emailAddress;
     }
 
+    public List<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", emailAddress='" + emailAddress + '\'' +
+                ", roles=" + roles +
                 '}';
     }
-
 }
