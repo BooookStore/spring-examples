@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ThymeleafVariablesResolveInspection -->
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8">
@@ -12,6 +13,20 @@
     <div class="container mt-4">
       <h1>ユーザ管理</h1>
       <p>ユーザの管理を行うページです。管理者ユーザのみがユーザの管理を行うことができます。</p>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">ユーザID</th>
+            <th scope="col">ユーザ名</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="u : ${users}" th:object="${u}">
+            <td th:text="*{userId}">ユーザID</td>
+            <td th:text="*{username}">ユーザ名</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </body>
 </html>
