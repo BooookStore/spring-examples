@@ -15,7 +15,7 @@
             <a class="nav-link" th:href="@{/home}">ホーム</a>
           </li>
           <li class="navbar-item" sec:authorize="hasRole('ADMIN')">
-            <a class="nav-link" th:href="@{/userManagement}">管理</a>
+            <a class="nav-link" th:href="@{/manage}">管理</a>
           </li>
         </ul>
         <ul class="navbar-nav">
