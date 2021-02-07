@@ -18,12 +18,14 @@
           <tr>
             <th scope="col">ユーザID</th>
             <th scope="col">ユーザ名</th>
+            <th scope="col">詳細</th>
           </tr>
         </thead>
         <tbody>
           <tr th:each="u : ${users}" th:object="${u}">
-            <td th:text="*{userId}">ユーザID</td>
-            <td th:text="*{username}">ユーザ名</td>
+            <td class="align-middle" th:text="*{userId}">ユーザID</td>
+            <td class="align-middle" th:text="*{username}">ユーザ名</td>
+            <td><a class="btn btn-primary" href="#" th:href="@{/manage/{id}(id=${u.userId})}">詳細</a></td>
           </tr>
         </tbody>
       </table>
