@@ -28,7 +28,7 @@ public class UserManagementController {
                 .map(user -> new UserListRowDto(user.getId(), user.getUsername()))
                 .collect(Collectors.toList());
         model.addAttribute("users", users);
-        return "userManagement";
+        return "usermanagement/userManagement";
     }
 
 }
