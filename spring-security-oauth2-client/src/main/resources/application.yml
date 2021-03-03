@@ -1,0 +1,16 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          spring-oauth2-client-demo:
+            client-id: spring-oauth2-client
+            client-secret: 2f7b1965-44d3-46df-9e5b-1655af84d0f2
+            provider: "local-docker-keycloak"
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/home"
+            scope: spring-oauth2-client
+        provider:
+          local-docker-keycloak:
+            authorization-uri: http://localhost:8081/auth/realms/spring-oauth2/protocol/openid-connect/auth
+            token-uri: http://localhost:8081/auth/realms/spring-oauth2/protocol/openid-connect/token

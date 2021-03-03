@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h1>OAuth2 Client Demo</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <p th:if="${authorized}">本アプリを認可しました。</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <a class="btn btn-primary" th:classappend="${authorized ? 'disabled' : ''}" th:href="@{/oauth2/authorization/spring-oauth2-client-demo}" href="#">Keycloakにより本アプリを認可する</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
