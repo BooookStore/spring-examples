@@ -5,7 +5,7 @@ spring:
         registration:
           spring-oauth2-client-demo:
             client-id: spring-oauth2-client
-            client-secret: 2f7b1965-44d3-46df-9e5b-1655af84d0f2
+            client-secret: 221b6560-3771-4bd6-a29a-f3477d380b73
             provider: "local-docker-keycloak"
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/home"
