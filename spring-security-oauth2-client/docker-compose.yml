@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  keycloak:
+    image: jboss/keycloak:12.0.4
+    container_name: keycloak
+    ports:
+      - "8081:8080"
+    volumes:
+      - "./keycloak:/keycloak-config"
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      KEYCLOAK_IMPORT: /keycloak-config/keycloak-config.json
+    networks:
+      - spring-oauth2
+  oauth2-client:
+    depends_on: [ keycloak ]
+    build: ./
+    image: spring-security-oauth2-client
+    container_name: oauth2-client
+    ports:
+      - "8080:8080"
+    environment:
+      spring.security.oauth2.client.provider.local-docker-keycloak.authorization-uri: http://localhost:8081/auth/realms/spring-oauth2/protocol/openid-connect/auth
+      spring.security.oauth2.client.provider.local-docker-keycloak.token-uri: http://keycloak:8080/auth/realms/spring-oauth2/protocol/openid-connect/token
+    networks:
+      - spring-oauth2
+
+networks:
+  spring-oauth2:
+    driver: bridge
